@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CadastroScreen extends StatefulWidget {
-  _CadastroScreenState createState() => _CadastroScreenState();
+  const CadastroScreen({super.key});
+
+  @override
+  CadastroScreenState createState() => CadastroScreenState();
 }
 
-class _CadastroScreenState extends State<CadastroScreen> {
+class CadastroScreenState extends State<CadastroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
