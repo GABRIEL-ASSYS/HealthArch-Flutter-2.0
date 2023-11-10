@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'cadastro_cliente_screen.dart';
 import 'cadastro_profissional_screen.dart';
 
