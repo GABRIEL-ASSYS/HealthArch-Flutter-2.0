@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   TabController? _tabController;
 
   @override
@@ -32,12 +34,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         bottom: TabBar(
           indicatorWeight: 4,
           indicatorColor: Colors.lightBlue,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
           controller: _tabController,
-          tabs: <Widget>[
+          tabs: const <Widget>[
             Tab(text: "Login"),
             Tab(text: "Cadastro"),
           ],
@@ -46,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          LoginScreen(),
+          const LoginScreen(),
           cadastro_screen(),
         ],
       ),

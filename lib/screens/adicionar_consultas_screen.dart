@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AdicionarConsultaScreen extends StatefulWidget {
+  const AdicionarConsultaScreen({super.key});
+
   @override
-  _AdicionarConsultasScreenState createState() => _AdicionarConsultasScreenState();
+  AdicionarConsultasScreenState createState() => AdicionarConsultasScreenState();
 }
 
-class _AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
+class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
   TextEditingController tituloController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
   TextEditingController horaDataController = TextEditingController();
@@ -30,15 +32,16 @@ class _AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Center(
-                  child: const Text(
+                const Center(
+                  child: Text(
                     'Adicionar Consulta:',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                ),
+                  const SizedBox(height: 16.0),
                   Form(
                     child: Column(
                       children: [
@@ -72,7 +75,6 @@ class _AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                       child: const Text('Cadastrar'),
                     ),
                   ),
-                ),
               ],
             ),
           ),

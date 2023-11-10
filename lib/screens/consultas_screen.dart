@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:health_arch/screens/adicionar_consultas_screen.dart';
 
-class ConsultasScreen extends StatelessWidget {
+class ConsultasScreen extends StatefulWidget {
+  const ConsultasScreen({super.key});
+
   @override
-  _ConsultasScreenState createState() => _ConsultasScreenState();
+  ConsultasScreenState createState() => ConsultasScreenState();
 }
 
-class _ConsultasScreenState extends State<ConsultasScreen> {
+class ConsultasScreenState extends State<ConsultasScreen> {
   List<Map<String, dynamic>> consultas = [
     {
       'id': 1,
@@ -55,66 +57,66 @@ class _ConsultasScreenState extends State<ConsultasScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Consultas',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 16.0),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: consultas.length,
-                  itemBuilder: (context, index) {
-                    final consulta = consultas[index];
-                    return Card(
-                      elevation: 3.0,
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: ListTile(
-                        title: Text('ID: ${consulta['id']}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Título: ${consulta['titulo']}'),
-                            Text('Descrição: ${consulta['descricao']}'),
-                            Text('Data e Hora: ${consulta['horaData']}'),
-                            Text('Nome do Cliente: ${consulta['nomeCliente']}'),
-                            Text('Nome do Profissional: ${consulta['nomeProfissional']}'),
-                          ],
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  consultas.removeAt(index);
-                                });
-                              }, 
-                              child: const Text('Excluir'),
-                            ),
-                            const SizedBox(width: 8.0),
-                            ElevatedButton(
-                              onPressed: () {}, 
-                              child: const Text('Editar')
-                            ),
-                          ],
-                        ),
+              ),
+              const SizedBox(height: 16.0),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: consultas.length,
+                itemBuilder: (context, index) {
+                  final consulta = consultas[index];
+                  return Card(
+                    elevation: 3.0,
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ListTile(
+                      title: Text('ID: ${consulta['id']}'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Título: ${consulta['titulo']}'),
+                          Text('Descrição: ${consulta['descricao']}'),
+                          Text('Data e Hora: ${consulta['horaData']}'),
+                          Text('Nome do Cliente: ${consulta['nomeCliente']}'),
+                          Text(
+                              'Nome do Profissional: ${consulta['nomeProfissional']}'),
+                        ],
                       ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 16.0),
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (context) => AdicionarConsultaScreen()),
-                    );
-                  },
-                  child: const Icon(Icons.add),
-                ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                consultas.removeAt(index);
+                              });
+                            },
+                            child: const Text('Excluir'),
+                          ),
+                          const SizedBox(width: 8.0),
+                          ElevatedButton(
+                              onPressed: () {}, child: const Text('Editar')),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16.0),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AdicionarConsultaScreen()),
+                  );
+                },
+                child: const Icon(Icons.add),
               ),
             ],
           ),
