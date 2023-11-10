@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:health_arch/screens/home_screen.dart';
+import 'package:health_arch/screens/Home/home_screen.dart';
 
 void main() => runApp(MaterialApp(
       home: const HomeScreen(),

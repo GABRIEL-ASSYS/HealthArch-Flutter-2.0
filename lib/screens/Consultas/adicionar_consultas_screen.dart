@@ -47,23 +47,23 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                       children: [
                         TextFormField(
                           controller: tituloController,
-                          decoration: const InputDecoration(labelText: 'Título'),
+                          decoration: const InputDecoration(labelText: 'Título:'),
                         ),
                         TextFormField(
                           controller: descricaoController,
-                          decoration: const InputDecoration(labelText: 'Descrição'),
+                          decoration: const InputDecoration(labelText: 'Descrição:'),
                         ),
                         TextFormField(
                           controller: horaDataController,
-                          decoration: const InputDecoration(labelText: 'Data e Hora'),
+                          decoration: const InputDecoration(labelText: 'Data e Hora:'),
                         ),
                         TextFormField(
                           controller: nomeClienteController,
-                          decoration: const InputDecoration(labelText: 'Nome do Cliente'),
+                          decoration: const InputDecoration(labelText: 'Nome do Cliente:'),
                         ),
                         TextFormField(
                           controller: nomeProfissionalController,
-                          decoration: const InputDecoration(labelText: 'Nome do Profissional'),
+                          decoration: const InputDecoration(labelText: 'Nome do Profissional:'),
                         ),
                       ],
                     ),
@@ -71,7 +71,7 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                   const SizedBox(height: 16.0),
                   Center(
                     child: ElevatedButton(
-                      onPressed: adicionarConsulta, 
+                      onPressed: adicionarConsulta,
                       child: const Text('Cadastrar'),
                     ),
                   ),

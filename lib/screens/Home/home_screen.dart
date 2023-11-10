@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+import 'package:health_arch/screens/Cadastro/cadastro_screen.dart';
+import '../Login/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,9 +48,9 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
       ),
       body: TabBarView(
         controller: _tabController,
-        children: <Widget>[
-          const LoginScreen(),
-          cadastro_screen(),
+        children: const <Widget>[
+          LoginScreen(),
+          CadastroScreen(),
         ],
       ),
     );

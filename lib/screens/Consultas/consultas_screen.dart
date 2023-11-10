@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:health_arch/screens/adicionar_consultas_screen.dart';
+import 'package:health_arch/screens/Consultas/adicionar_consultas_screen.dart';
 
 class ConsultasScreen extends StatefulWidget {
   const ConsultasScreen({super.key});
