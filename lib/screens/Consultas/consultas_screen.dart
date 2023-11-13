@@ -1,48 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:health_arch/screens/Consultas/adicionar_consultas_screen.dart';
 
 class ConsultasScreen extends StatefulWidget {
-  const ConsultasScreen({super.key});
+  const ConsultasScreen({Key? key}) : super(key: key);
 
   @override
   ConsultasScreenState createState() => ConsultasScreenState();
 }
 
 class ConsultasScreenState extends State<ConsultasScreen> {
-  List<Map<String, dynamic>> consultas = [
-    {
-      'id': 1,
-      'titulo': 'Consulta de Rotina',
-      'descricao': 'Exame de rotina e verificação de saúde.',
-      'horaData': '10/09/2023 09:00 AM',
-      'nomeCliente': 'Maria Silva',
-      'nomeProfissional': 'Dr. João'
+  late List<Map<String, dynamic>> consultas;
+
+  @override
+  void initState() {
+    super.initState();
+    loadConsultas();
+  }
+
+  Future<void> loadConsultas() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('consultas').get();
+
+      consultas = querySnapshot.docs.map((DocumentSnapshot doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return data;
+      }).toList();
+
+      setState(() {});
+    } catch (error) {
+      print('Erro ao carregar consultas: $error');
     }
-  ];
+  }
 
-  TextEditingController tituloController = TextEditingController();
-  TextEditingController descricaoController = TextEditingController();
-  TextEditingController horaDataController = TextEditingController();
-  TextEditingController nomeClienteController = TextEditingController();
-  TextEditingController nomeProfissionalController = TextEditingController();
+  Future<void> excluirConsulta(String consultaId) async {
+    try {
+      // Implemente a lógica para excluir a consulta no Firestore.
+      await FirebaseFirestore.instance
+          .collection('consulta')
+          .doc(consultaId)
+          .delete();
 
-  void adicionarConsulta() {
-    setState(() {
-      consultas.add({
-        'id': consultas.length + 1,
-        'titulo': tituloController.text,
-        'descricao': descricaoController.text,
-        'horaData': horaDataController.text,
-        'nomeCliente': nomeClienteController.text,
-        'nomeProfissional': nomeProfissionalController.text,
-      });
+      // Atualiza a lista de consultas após a exclusão.
+      await loadConsultas();
+    } catch (error) {
+      print('Erro ao excluir consulta: $error');
+    }
+  }
 
-      tituloController.clear();
-      descricaoController.clear();
-      horaDataController.clear();
-      nomeClienteController.clear();
-      nomeProfissionalController.clear();
-    });
+  // Implemente a lógica para editar a consulta no Firestore.
+  Future<void> editarConsulta(String consultaId) async {
+    // Isso pode envolver a navegação para uma nova tela de edição ou a exibição de um modal de edição.
+    // Lembre-se de passar a consultaId para a tela de edição, para que ela saiba qual consulta está sendo editada.
   }
 
   @override
@@ -92,15 +103,17 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              setState(() {
-                                consultas.removeAt(index);
-                              });
+                              excluirConsulta(consulta['id']);
                             },
                             child: const Text('Excluir'),
                           ),
                           const SizedBox(width: 8.0),
                           ElevatedButton(
-                              onPressed: () {}, child: const Text('Editar')),
+                            onPressed: () {
+                              editarConsulta(consulta['id']);
+                            },
+                            child: const Text('Editar'),
+                          ),
                         ],
                       ),
                     ),
@@ -113,7 +126,8 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AdicionarConsultaScreen()),
+                      builder: (context) => AdicionarConsultaScreen(),
+                    ),
                   );
                 },
                 child: const Icon(Icons.add),
