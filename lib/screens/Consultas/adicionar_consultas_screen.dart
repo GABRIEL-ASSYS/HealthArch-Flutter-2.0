@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class AdicionarConsultaScreen extends StatefulWidget {
-  const AdicionarConsultaScreen({super.key});
+  const AdicionarConsultaScreen({Key? key}) : super(key: key);
 
   @override
   AdicionarConsultasScreenState createState() => AdicionarConsultasScreenState();
@@ -13,9 +15,25 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
   TextEditingController horaDataController = TextEditingController();
   TextEditingController nomeClienteController = TextEditingController();
   TextEditingController nomeProfissionalController = TextEditingController();
+  FocusNode horaDataFocus = FocusNode();
 
-  void adicionarConsulta {
+  Future<void> adicionarConsulta() async {
+    try {
+      DateTime dataHora = DateTime.parse(horaDataController.text);
+      Timestamp timestamp = Timestamp.fromDate(dataHora);
 
+      await FirebaseFirestore.instance.collection('consulta').add({
+        'titulo': tituloController.text,
+        'descricao': descricaoController.text,
+        'horaData': timestamp,
+        'nomeCliente': nomeClienteController.text,
+        'nomeProfissional': nomeProfissionalController.text,
+      });
+
+      print('Consulta adicionada com sucesso!');
+    } catch (error) {
+      print('Erro ao adicionar consulta: $error');
+    }
   }
 
   @override
@@ -41,40 +59,69 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                     ),
                   ),
                 ),
-                  const SizedBox(height: 16.0),
-                  Form(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: tituloController,
-                          decoration: const InputDecoration(labelText: 'Título:'),
-                        ),
-                        TextFormField(
-                          controller: descricaoController,
-                          decoration: const InputDecoration(labelText: 'Descrição:'),
-                        ),
-                        TextFormField(
-                          controller: horaDataController,
-                          decoration: const InputDecoration(labelText: 'Data e Hora:'),
-                        ),
-                        TextFormField(
-                          controller: nomeClienteController,
-                          decoration: const InputDecoration(labelText: 'Nome do Cliente:'),
-                        ),
-                        TextFormField(
-                          controller: nomeProfissionalController,
-                          decoration: const InputDecoration(labelText: 'Nome do Profissional:'),
-                        ),
-                      ],
-                    ),
+                const SizedBox(height: 16.0),
+                Form(
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: tituloController,
+                        decoration: const InputDecoration(labelText: 'Título:'),
+                      ),
+                      TextFormField(
+                        controller: descricaoController,
+                        decoration: const InputDecoration(labelText: 'Descrição:'),
+                      ),
+                      TextFormField(
+                        controller: horaDataController,
+                        focusNode: horaDataFocus,
+                        decoration: const InputDecoration(labelText: 'Data e Hora:'),
+                        onTap: () async {
+                          horaDataFocus.unfocus(); // Remova o foco para evitar o teclado
+                          DateTime dataSelecionada = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2101),
+                          );
+
+                          if (dataSelecionada != null) {
+                            TimeOfDay horaSelecionada = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            );
+
+                            if (horaSelecionada != null) {
+                              DateTime dataHoraSelecionada = DateTime(
+                                dataSelecionada.year,
+                                dataSelecionada.month,
+                                dataSelecionada.day,
+                                horaSelecionada.hour,
+                                horaSelecionada.minute,
+                              );
+
+                              horaDataController.text = DateFormat('yyyy-MM-dd HH:mm').format(dataHoraSelecionada);
+                            }
+                          }
+                        },
+                      ),
+                      TextFormField(
+                        controller: nomeClienteController,
+                        decoration: const InputDecoration(labelText: 'Nome do Cliente:'),
+                      ),
+                      TextFormField(
+                        controller: nomeProfissionalController,
+                        decoration: const InputDecoration(labelText: 'Nome do Profissional:'),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16.0),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: adicionarConsulta,
-                      child: const Text('Cadastrar'),
-                    ),
+                ),
+                const SizedBox(height: 16.0),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: adicionarConsulta,
+                    child: const Text('Cadastrar'),
                   ),
+                ),
               ],
             ),
           ),
@@ -82,5 +129,4 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
       ),
     );
   }
-
 }
