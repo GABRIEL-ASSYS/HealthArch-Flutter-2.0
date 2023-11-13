@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:health_arch/screens/consultas_screen.dart'; // Substitua pelo caminho real do seu arquivo de consultas
+
+import '../Consultas/consultas_screen.dart'; // Substitua pelo caminho real do seu arquivo de consultas
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
