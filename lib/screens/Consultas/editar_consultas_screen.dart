@@ -8,10 +8,10 @@ class EditarConsultaScreen extends StatefulWidget {
   const EditarConsultaScreen({Key? key, required this.consultaId}) : super(key: key);
 
   @override
-  _EditarConsultaScreenState createState() => _EditarConsultaScreenState();
+  EditarConsultaScreenState createState() => EditarConsultaScreenState();
 }
 
-class _EditarConsultaScreenState extends State<EditarConsultaScreen> {
+class EditarConsultaScreenState extends State<EditarConsultaScreen> {
   TextEditingController tituloController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
   TextEditingController horaDataController = TextEditingController();
