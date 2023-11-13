@@ -15,7 +15,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   TextEditingController cepClienteController = TextEditingController();
   TextEditingController ruaClienteController = TextEditingController();
   TextEditingController numeroClienteController = TextEditingController();
-  TextEditingController cidadeClienteController = TextEditingController();
+  TextEditingController cidadeClienteController = TextEditingController(); 
 
   Future<void> adicionarCliente() async {
     try {
