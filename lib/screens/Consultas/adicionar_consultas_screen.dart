@@ -15,14 +15,45 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
   TextEditingController horaDataController = TextEditingController();
   TextEditingController nomeClienteController = TextEditingController();
   TextEditingController nomeProfissionalController = TextEditingController();
-  FocusNode horaDataFocus = FocusNode();
 
   Future<void> adicionarConsulta() async {
+    try {
+      DateTime? dataSelecionada = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2101),
+      );
+
+      if (dataSelecionada != null) {
+        TimeOfDay? horaSelecionada = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+        );
+
+        if (horaSelecionada != null) {
+          DateTime dataHoraSelecionada = DateTime(
+            dataSelecionada.year,
+            dataSelecionada.month,
+            dataSelecionada.day,
+            horaSelecionada.hour,
+            horaSelecionada.minute,
+          );
+
+          horaDataController.text = DateFormat('yyyy-MM-dd HH:mm').format(dataHoraSelecionada);
+        }
+      }
+    } catch (error) {
+      print('Erro ao selecionar data e hora: $error');
+    }
+  }
+
+  Future<void> enviarConsulta() async {
     try {
       DateTime dataHora = DateTime.parse(horaDataController.text);
       Timestamp timestamp = Timestamp.fromDate(dataHora);
 
-      await FirebaseFirestore.instance.collection('consulta').add({
+      await FirebaseFirestore.instance.collection('consultas').add({
         'titulo': tituloController.text,
         'descricao': descricaoController.text,
         'horaData': timestamp,
@@ -73,36 +104,8 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                       ),
                       TextFormField(
                         controller: horaDataController,
-                        focusNode: horaDataFocus,
                         decoration: const InputDecoration(labelText: 'Data e Hora:'),
-                        onTap: () async {
-                          horaDataFocus.unfocus(); // Remova o foco para evitar o teclado
-                          DateTime dataSelecionada = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2101),
-                          );
-
-                          if (dataSelecionada != null) {
-                            TimeOfDay horaSelecionada = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            );
-
-                            if (horaSelecionada != null) {
-                              DateTime dataHoraSelecionada = DateTime(
-                                dataSelecionada.year,
-                                dataSelecionada.month,
-                                dataSelecionada.day,
-                                horaSelecionada.hour,
-                                horaSelecionada.minute,
-                              );
-
-                              horaDataController.text = DateFormat('yyyy-MM-dd HH:mm').format(dataHoraSelecionada);
-                            }
-                          }
-                        },
+                        onTap: adicionarConsulta,
                       ),
                       TextFormField(
                         controller: nomeClienteController,
@@ -118,7 +121,7 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                 const SizedBox(height: 16.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: adicionarConsulta,
+                    onPressed: enviarConsulta,
                     child: const Text('Cadastrar'),
                   ),
                 ),
