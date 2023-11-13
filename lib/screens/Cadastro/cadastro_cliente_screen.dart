@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CadastroClienteScreen extends StatefulWidget {
   const CadastroClienteScreen({super.key});
@@ -14,10 +15,27 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   TextEditingController cepClienteController = TextEditingController();
   TextEditingController ruaClienteController = TextEditingController();
   TextEditingController numeroClienteController = TextEditingController();
-  TextEditingController cidadeClienteController = TextEditingController();
+  TextEditingController cidadeClienteController = TextEditingController(); 
 
-  void adicionarCliente {
+  Future<void> adicionarCliente() async {
+    try {
+      // Crie um novo usuário no Firebase Authentication
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailClienteController.text,
+        password: senhaClienteController.text,
+      );
 
+      // Após o cadastro bem-sucedido, redirecione para a tela de login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      print('Erro ao cadastrar cliente: $e');
+      // Adicione aqui a lógica para lidar com erros de cadastro (por exemplo, exibir uma mensagem de erro).
+    }
   }
 
   @override

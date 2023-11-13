@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CadastroProfissionalScreen extends StatefulWidget {
   const CadastroProfissionalScreen({super.key});
@@ -10,15 +11,32 @@ class CadastroProfissionalScreen extends StatefulWidget {
 class CadastroProfissionalScreenState extends State<CadastroProfissionalScreen> {
   TextEditingController nomeProfissionalController = TextEditingController();
   TextEditingController emailProfissionalController = TextEditingController();
-  TextEditingController senhaProfissionalController = TextEditingController();
+  TextEditingController senhaProfissionalController = TextEditingController(); 
   TextEditingController cepProfissionalController = TextEditingController();
   TextEditingController ruaProfissionalController = TextEditingController();
   TextEditingController numeroProfissionalController = TextEditingController();
   TextEditingController cidadeProfissionalController = TextEditingController();
   TextEditingController codigoProfissionalClienteController = TextEditingController();
 
-  void adicionarCliente {
+  Future<void> adicionarProfissional() async {
+    try {
+      // Crie um novo usuário no Firebase Authentication
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailProfissionalController.text,
+        password: senhaProfissionalController.text,
+      );
 
+      // Após o cadastro bem-sucedido, redirecione para a tela de login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      print('Erro ao cadastrar profissional: $e');
+      // Adicione aqui a lógica para lidar com erros de cadastro (por exemplo, exibir uma mensagem de erro).
+    }
   }
 
   @override
@@ -86,7 +104,7 @@ class CadastroProfissionalScreenState extends State<CadastroProfissionalScreen> 
                 const SizedBox(height: 16.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: adicionarCliente, 
+                    onPressed: adicionarProfissional, 
                     child: const Text('Cadastrar'),
                   ),
                 )
