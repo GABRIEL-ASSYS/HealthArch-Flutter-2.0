@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:health_arch/screens/Consultas/adicionar_consultas_screen.dart';
+import 'package:health_arch/screens/Consultas/editar_consultas_screen.dart';
 
 class ConsultasScreen extends StatefulWidget {
   const ConsultasScreen({Key? key}) : super(key: key);
@@ -37,23 +38,28 @@ class ConsultasScreenState extends State<ConsultasScreen> {
 
   Future<void> excluirConsulta(String consultaId) async {
     try {
-      // Implemente a lógica para excluir a consulta no Firestore.
       await FirebaseFirestore.instance
-          .collection('consulta')
+          .collection('consultas')
           .doc(consultaId)
           .delete();
 
-      // Atualiza a lista de consultas após a exclusão.
       await loadConsultas();
     } catch (error) {
       print('Erro ao excluir consulta: $error');
     }
   }
 
-  // Implemente a lógica para editar a consulta no Firestore.
   Future<void> editarConsulta(String consultaId) async {
-    // Isso pode envolver a navegação para uma nova tela de edição ou a exibição de um modal de edição.
-    // Lembre-se de passar a consultaId para a tela de edição, para que ela saiba qual consulta está sendo editada.
+    try {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditarConsultaScreen(consultaId: consultaId),
+        ),
+      );
+    } catch (error) {
+      print('Erro ao editar consulta: $error');
+    }
   }
 
   @override
