@@ -27,7 +27,7 @@ class _EditarConsultaScreenState extends State<EditarConsultaScreen> {
   Future<void> loadConsultaExistente() async {
     try {
       DocumentSnapshot consultaSnapshot = await FirebaseFirestore.instance
-          .collection('consultas')
+          .collection('consulta')
           .doc(widget.consultaId)
           .get();
 
@@ -51,7 +51,7 @@ class _EditarConsultaScreenState extends State<EditarConsultaScreen> {
       Timestamp timestamp = Timestamp.fromDate(dataHora);
 
       await FirebaseFirestore.instance
-          .collection('consultas')
+          .collection('consulta')
           .doc(widget.consultaId)
           .update({
         'titulo': tituloController.text,
