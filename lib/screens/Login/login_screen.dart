@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_arch/screens/consultas_screen.dart'; // Substitua pelo caminho real do seu arquivo de consultas
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,6 +10,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
+
+  Future<void> fazerLogin() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: senhaController.text,
+      );
+
+      // Após o login bem-sucedido, redirecione para a página de consultas
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConsultasScreen(),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      print('Erro ao fazer login: $e');
+      // Adicione aqui a lógica para lidar com erros de login (por exemplo, exibir uma mensagem de erro).
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +63,9 @@ class LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
                       hintText: 'Digite seu Email',
                     ),
                   ),
@@ -51,16 +77,17 @@ class LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const TextField(
+                  TextField(
+                    controller: senhaController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Digite sua senha',
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  ElevatedButton( 
-                    onPressed: () {}, 
-                    child: const Text('Entrar')
+                  ElevatedButton(
+                    onPressed: fazerLogin,
+                    child: const Text('Entrar'),
                   ),
                 ],
               ),
