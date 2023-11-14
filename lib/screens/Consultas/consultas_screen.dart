@@ -34,11 +34,12 @@ class ConsultasScreenState extends State<ConsultasScreen> {
       print('Erro ao carregar consultas: $error');
     }
   }
+  // Restante do seu código para excluir e editar consultas...
 
   Future<void> excluirConsulta(String consultaId) async {
     try {
       await FirebaseFirestore.instance
-          .collection('consultas')
+          .collection(tipoUsuario == 'cliente' ? 'consultas_clientes' : 'consultas_profissionais')
           .doc(consultaId)
           .delete();
 
@@ -50,12 +51,34 @@ class ConsultasScreenState extends State<ConsultasScreen> {
 
   Future<void> editarConsulta(String consultaId) async {
     try {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => EditarConsultaScreen(consultaId: consultaId),
-        ),
-      );
+      // Verifique o tipo de usuário antes de permitir a edição
+      if (tipoUsuario == 'profissional') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditarConsultaScreen(consultaId: consultaId),
+          ),
+        );
+      } else {
+        // Se não for um profissional, exiba um alerta
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Acesso Negado'),
+              content: const Text('Apenas profissionais podem editar consultas.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     } catch (error) {
       print('Erro ao editar consulta: $error');
     }
@@ -111,6 +134,12 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                               excluirConsulta(consulta['id']);
                             },
                             child: const Text('Excluir'),
+                            // Desabilita o botão se o usuário não for um profissional
+                            style: tipoUsuario != 'profissional'
+                                ? ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(Colors.grey),
+                                  )
+                                : null,
                           ),
                           const SizedBox(width: 8.0),
                           ElevatedButton(
@@ -118,6 +147,12 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                               editarConsulta(consulta['id']);
                             },
                             child: const Text('Editar'),
+                            // Desabilita o botão se o usuário não for um profissional
+                            style: tipoUsuario != 'profissional'
+                                ? ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(Colors.grey),
+                                  )
+                                : null,
                           ),
                         ],
                       ),
@@ -128,12 +163,34 @@ class ConsultasScreenState extends State<ConsultasScreen> {
               const SizedBox(height: 16.0),
               FloatingActionButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AdicionarConsultaScreen(),
-                    ),
-                  );
+                  // Verifique o tipo de usuário antes de permitir a adição
+                  if (tipoUsuario == 'profissional') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AdicionarConsultaScreen(),
+                      ),
+                    );
+                  } else {
+                    // Se não for um profissional, exiba um alerta
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Acesso Negado'),
+                          content: const Text('Apenas profissionais podem adicionar consultas.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
                 child: const Icon(Icons.add),
               ),
