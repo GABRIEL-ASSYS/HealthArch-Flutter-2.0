@@ -14,7 +14,7 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
 
-  Future<void> fazerLogin(BuildContext context) async {
+  Future<void> fazerLogin() async {
     try {
       // ignore: unused_local_variable
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -22,8 +22,7 @@ class LoginScreenState extends State<LoginScreen> {
         password: senhaController.text,
       );
 
-      Navigator.pushReplacement(
-        context,
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => ConsultasScreen(),
         ),
@@ -86,7 +85,7 @@ class LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
-                    onPressed: () => fazerLogin(context),
+                    onPressed: fazerLogin,
                     child: const Text('Entrar'),
                   ),
                 ],
