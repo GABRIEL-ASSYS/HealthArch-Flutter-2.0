@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../Consultas/consultas_screen.dart'; // Substitua pelo caminho real do seu arquivo de consultas
+import '../Consultas/consultas_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,12 +16,12 @@ class LoginScreenState extends State<LoginScreen> {
 
   Future<void> fazerLogin() async {
     try {
+      // ignore: unused_local_variable
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: senhaController.text,
       );
 
-      // Após o login bem-sucedido, redirecione para a página de consultas
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -30,7 +30,6 @@ class LoginScreenState extends State<LoginScreen> {
       );
     } on FirebaseAuthException catch (e) {
       print('Erro ao fazer login: $e');
-      // Adicione aqui a lógica para lidar com erros de login (por exemplo, exibir uma mensagem de erro).
     }
   }
 
