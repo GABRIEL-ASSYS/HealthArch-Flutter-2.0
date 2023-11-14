@@ -16,6 +16,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   Future<void> fazerLogin(BuildContext context) async {
     try {
+      // ignore: unused_local_variable
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: senhaController.text,
