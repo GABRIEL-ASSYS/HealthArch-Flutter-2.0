@@ -14,8 +14,7 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
 
-  Future<void> fazerLogin() async {
-    BuildContext localContext = context; // Armazena o contexto localmente
+  Future<void> fazerLogin() async { // Armazena o contexto localmente
 
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -23,9 +22,10 @@ class LoginScreenState extends State<LoginScreen> {
         password: senhaController.text,
       );
 
-      Navigator.of(localContext).pushReplacement(
+      Navigator.pushReplacement(
+        context,
         MaterialPageRoute(
-          builder: (context) => const ConsultasScreen(),
+          builder: (context) => ConsultasScreen(),
         ),
       );
     } on FirebaseAuthException catch (e) {
