@@ -39,7 +39,12 @@ class CadastroScreenState extends State<CadastroScreen> {
                   context,
                   MaterialPageRoute(builder: (context) => const CadastroProfissionalScreen()),
                 );
-              }, 
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.lightBlue, 
+                onPrimary: Colors.white, 
+                textStyle: const TextStyle(fontSize: 20), 
+              ),
               child: const Text('Cadastro Profissional'),
             ),
           ],
