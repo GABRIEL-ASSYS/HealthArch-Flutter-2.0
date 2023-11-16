@@ -109,6 +109,11 @@ class CadastroProfissionalScreenState extends State<CadastroProfissionalScreen> 
                 Center(
                   child: ElevatedButton(
                     onPressed: adicionarProfissional, 
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlue, 
+                      onPrimary: Colors.white, 
+                      textStyle: const TextStyle(fontSize: 20), 
+                    ),
                     child: const Text('Cadastrar'),
                   ),
                 )
