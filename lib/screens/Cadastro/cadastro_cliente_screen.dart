@@ -59,7 +59,10 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Cliente'),
+         title: const Text(
+          'HealthArch',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
