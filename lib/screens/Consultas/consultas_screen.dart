@@ -52,8 +52,22 @@ class ConsultasScreenState extends State<ConsultasScreen> {
     try {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => EditarConsultaScreen(consultaId: consultaId),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              EditarConsultaScreen(consultaId: consultaId),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = 0.0;
+            const end = 1.0;
+            const curve = Curves.easeInOut;
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var opacityAnimation = animation.drive(tween);
+
+            return FadeTransition(
+              opacity: opacityAnimation,
+              child: child,
+            );
+          },
         ),
       );
     } catch (error) {
@@ -130,8 +144,22 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => AdicionarConsultaScreen(),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AdicionarConsultaScreen(),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        const begin = 0.0;
+                        const end = 1.0;
+                        const curve = Curves.easeInOut;
+
+                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                        var opacityAnimation = animation.drive(tween);
+
+                        return FadeTransition(
+                          opacity: opacityAnimation,
+                          child: child,
+                        );
+                      },
                     ),
                   );
                 },
