@@ -120,6 +120,11 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
                 Center(
                   child: ElevatedButton(
                     onPressed: adicionarCliente,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlue, 
+                      onPrimary: Colors.white, 
+                      textStyle: const TextStyle(fontSize: 20), 
+                    ),
                     child: const Text('Cadastrar'),
                   ),
                 )
