@@ -133,6 +133,11 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                 Center(
                   child: ElevatedButton(
                     onPressed: enviarConsulta,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlue, 
+                      onPrimary: Colors.white, 
+                      textStyle: const TextStyle(fontSize: 20), 
+                    ),
                     child: const Text('Cadastrar'),
                   ),
                 ),
