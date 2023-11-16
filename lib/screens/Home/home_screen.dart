@@ -3,7 +3,7 @@ import 'package:health_arch/screens/Cadastro/cadastro_screen.dart';
 import '../Login/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key});
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -23,14 +23,24 @@ class HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               onPressed: () {
                 _navigateToLoginScreen(context);
-              }, 
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.lightBlue, 
+                onPrimary: Colors.white,
+                textStyle: const TextStyle(fontSize: 20),
+              ),
               child: const Text('Login'),
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 _navigateToCadastroScreen(context);
-              }, 
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.lightBlue, 
+                onPrimary: Colors.white, 
+                textStyle: const TextStyle(fontSize: 20), 
+              ),
               child: const Text('Cadastro'),
             ),
           ],
@@ -82,4 +92,17 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+    ),
+  );
 }
