@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "645043733402",
+    "project_id": "health-arch-4b7c7",
+    "storage_bucket": "health-arch-4b7c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645043733402:android:473a3c4af5430f34d9f023",
+        "android_client_info": {
+          "package_name": "com.example.health_arch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645043733402-ddm2glaqi05p0t9t3k9rlcpolda5r3hh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJWy3cNUpTvBBbM2LX2IIyHNhWytlO7yk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645043733402-ddm2glaqi05p0t9t3k9rlcpolda5r3hh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
