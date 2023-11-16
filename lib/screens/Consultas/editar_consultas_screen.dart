@@ -112,7 +112,10 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Editar Consulta'),
+        title: const Text(
+          'HealthArch',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
