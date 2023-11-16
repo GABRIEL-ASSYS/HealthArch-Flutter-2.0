@@ -82,7 +82,10 @@ class ConsultasScreenState extends State<ConsultasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Consultas'),
+         title: const Text(
+          'HealthArch',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
