@@ -14,7 +14,10 @@ class CadastroScreenState extends State<CadastroScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro'),
+        title: const Text(
+          'Cadastro',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Center(
         child: Column(
