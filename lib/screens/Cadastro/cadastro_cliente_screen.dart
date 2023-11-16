@@ -1,11 +1,12 @@
+User
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Login/login_screen.dart';
 
 class CadastroClienteScreen extends StatefulWidget {
-  const CadastroClienteScreen({Key? key});
-
+  const CadastroClienteScreen({super.key});
+  
   @override
   CadastroClienteScreenState createState() => CadastroClienteScreenState();
 }
@@ -17,7 +18,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   TextEditingController cepClienteController = TextEditingController();
   TextEditingController ruaClienteController = TextEditingController();
   TextEditingController numeroClienteController = TextEditingController();
-  TextEditingController cidadeClienteController = TextEditingController();
+  TextEditingController cidadeClienteController = TextEditingController(); 
 
   Future<void> adicionarCliente() async {
     try {
@@ -98,7 +99,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
                 const SizedBox(height: 16.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: adicionarCliente,
+                    onPressed: adicionarCliente, 
                     child: const Text('Cadastrar'),
                   ),
                 )
