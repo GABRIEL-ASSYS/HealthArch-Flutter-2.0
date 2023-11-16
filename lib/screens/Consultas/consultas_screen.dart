@@ -130,6 +130,11 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                             onPressed: () {
                               excluirConsulta(consulta['id']);
                             },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.lightBlue, 
+                              onPrimary: Colors.white, 
+                              textStyle: const TextStyle(fontSize: 20), 
+                            ),
                             child: const Text('Excluir'),
                           ),
                           const SizedBox(width: 8.0),
@@ -137,6 +142,11 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                             onPressed: () {
                               editarConsulta(consulta['id']);
                             },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.lightBlue, 
+                              onPrimary: Colors.white, 
+                              textStyle: const TextStyle(fontSize: 20), 
+                            ),
                             child: const Text('Editar'),
                           ),
                         ],
