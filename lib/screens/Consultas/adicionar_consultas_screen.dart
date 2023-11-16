@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'consultas_screen.dart'; // Importe a tela de consultas aqui
+import 'consultas_screen.dart';
 
 class AdicionarConsultaScreen extends StatefulWidget {
   const AdicionarConsultaScreen({Key? key}) : super(key: key);
@@ -45,6 +45,7 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
         }
       }
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao selecionar data e hora: $error');
     }
   }
@@ -62,16 +63,14 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
         'nomeProfissional': nomeProfissionalController.text,
       });
 
-      print('Consulta adicionada com sucesso!');
-
-      // Redirecione para a tela de consultas
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ConsultasScreen(),
+          builder: (context) => const ConsultasScreen(),
         ),
       );
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao adicionar consulta: $error');
     }
   }

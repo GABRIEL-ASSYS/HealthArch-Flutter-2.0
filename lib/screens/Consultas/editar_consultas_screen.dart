@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'consultas_screen.dart'; // Importe a tela de consultas aqui
+import 'consultas_screen.dart';
 
 class EditarConsultaScreen extends StatefulWidget {
   final String consultaId;
@@ -42,6 +42,7 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
       nomeClienteController.text = consultaData['nomeCliente'];
       nomeProfissionalController.text = consultaData['nomeProfissional'];
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao carregar consulta existente: $error');
     }
   }
@@ -62,16 +63,14 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
         'nomeProfissional': nomeProfissionalController.text,
       });
 
-      print('Consulta editada com sucesso!');
-
-      // Redirecione para a tela de consultas
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ConsultasScreen(),
+          builder: (context) => const ConsultasScreen(),
         ),
       );
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao editar consulta: $error');
     }
   }
@@ -104,6 +103,7 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
         }
       }
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao selecionar data e hora: $error');
     }
   }

@@ -22,7 +22,7 @@ class CadastroProfissionalScreenState extends State<CadastroProfissionalScreen> 
 
   Future<void> adicionarProfissional() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailProfissionalController.text,
         password: senhaProfissionalController.text,
       );
@@ -30,10 +30,11 @@ class CadastroProfissionalScreenState extends State<CadastroProfissionalScreen> 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginScreen(),
+          builder: (context) => const LoginScreen(),
         ),
       );
     } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
       print('Erro ao cadastrar profissional: $e');
     }
   }

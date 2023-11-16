@@ -16,7 +16,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   Future<void> fazerLogin() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: senhaController.text,
       );
@@ -41,6 +41,7 @@ class LoginScreenState extends State<LoginScreen> {
         ),
       );
     } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
       print('Erro ao fazer login: $e');
     }
   }

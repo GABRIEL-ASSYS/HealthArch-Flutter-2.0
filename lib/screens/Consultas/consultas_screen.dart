@@ -31,6 +31,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
 
       setState(() {});
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao carregar consultas: $error');
     }
   }
@@ -44,6 +45,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
 
       await loadConsultas();
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao excluir consulta: $error');
     }
   }
@@ -71,6 +73,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
         ),
       );
     } catch (error) {
+      // ignore: avoid_print
       print('Erro ao editar consulta: $error');
     }
   }
@@ -146,7 +149,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          AdicionarConsultaScreen(),
+                          const AdicionarConsultaScreen(),
                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
                         const begin = 0.0;
                         const end = 1.0;

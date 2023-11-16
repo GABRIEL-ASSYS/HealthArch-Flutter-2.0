@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../Login/login_screen.dart';
 
 class CadastroClienteScreen extends StatefulWidget {
-  const CadastroClienteScreen({Key? key});
+  const CadastroClienteScreen({Key? key}) : super(key: key);
 
   @override
   CadastroClienteScreenState createState() => CadastroClienteScreenState();
@@ -20,20 +20,20 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   TextEditingController cidadeClienteController = TextEditingController();
 
   Future<void> adicionarCliente() async {
+
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailClienteController.text,
         password: senhaClienteController.text,
       );
 
-      // Adiciona uma transição personalizada
-      Navigator.of(context).pushReplacement(_createRoute(LoginScreen()));
+      Navigator.of(context).pushReplacement(_createRoute(const LoginScreen()));
     } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
       print('Erro ao cadastrar cliente: $e');
     }
   }
 
-  // Função para criar uma rota personalizada
   Route _createRoute(Widget destination) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => destination,
