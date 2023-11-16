@@ -113,7 +113,7 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'HealthArch',
+          'Editar Consulta',
           style: TextStyle(color: Colors.white),
         ),
       ),
