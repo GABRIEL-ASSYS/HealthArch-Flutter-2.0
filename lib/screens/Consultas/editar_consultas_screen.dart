@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'consultas_screen.dart'; // Importe a tela de consultas aqui
 
 class EditarConsultaScreen extends StatefulWidget {
   final String consultaId;
@@ -62,6 +63,14 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
       });
 
       print('Consulta editada com sucesso!');
+
+      // Redirecione para a tela de consultas
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConsultasScreen(),
+        ),
+      );
     } catch (error) {
       print('Erro ao editar consulta: $error');
     }
@@ -96,25 +105,6 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
       }
     } catch (error) {
       print('Erro ao selecionar data e hora: $error');
-    }
-  }
-
-  Future<void> enviarConsulta() async {
-    try {
-      DateTime dataHora = DateTime.parse(horaDataController.text);
-      Timestamp timestamp = Timestamp.fromDate(dataHora);
-
-      await FirebaseFirestore.instance.collection('consulta').add({
-        'titulo': tituloController.text,
-        'descricao': descricaoController.text,
-        'horaData': timestamp,
-        'nomeCliente': nomeClienteController.text,
-        'nomeProfissional': nomeProfissionalController.text,
-      });
-
-      print('Consulta adicionada com sucesso!');
-    } catch (error) {
-      print('Erro ao adicionar consulta: $error');
     }
   }
 
