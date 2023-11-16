@@ -79,7 +79,10 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar Consulta'),
+         title: const Text(
+          'HealthArch',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
