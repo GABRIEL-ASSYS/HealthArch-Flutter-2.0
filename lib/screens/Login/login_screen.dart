@@ -15,6 +15,7 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController senhaController = TextEditingController();
 
   Future<void> fazerLogin() async {
+    
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,

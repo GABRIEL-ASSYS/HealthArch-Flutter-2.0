@@ -20,6 +20,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   TextEditingController cidadeClienteController = TextEditingController();
 
   Future<void> adicionarCliente() async {
+    final navigator = Navigator.of(context);
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -27,7 +28,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
         password: senhaClienteController.text,
       );
 
-      Navigator.of(context).pushReplacement(_createRoute(const LoginScreen()));
+      navigator.pushReplacement(_createRoute(const LoginScreen()));
     } on FirebaseAuthException catch (e) {
       // ignore: avoid_print
       print('Erro ao cadastrar cliente: $e');

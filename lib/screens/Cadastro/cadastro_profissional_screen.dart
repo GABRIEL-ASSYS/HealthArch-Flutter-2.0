@@ -11,6 +11,7 @@ class CadastroProfissionalScreen extends StatefulWidget {
 }
 
 class CadastroProfissionalScreenState extends State<CadastroProfissionalScreen> {
+  
   TextEditingController nomeProfissionalController = TextEditingController();
   TextEditingController emailProfissionalController = TextEditingController();
   TextEditingController senhaProfissionalController = TextEditingController(); 
