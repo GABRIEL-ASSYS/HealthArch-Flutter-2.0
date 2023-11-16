@@ -60,7 +60,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
     return Scaffold(
       appBar: AppBar(
          title: const Text(
-          'HealthArch',
+          'Cadastro Cliente',
           style: TextStyle(color: Colors.white),
         ),
       ),
