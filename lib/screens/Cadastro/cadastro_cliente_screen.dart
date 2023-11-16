@@ -1,12 +1,11 @@
-User
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Login/login_screen.dart';
 
 class CadastroClienteScreen extends StatefulWidget {
-  const CadastroClienteScreen({super.key});
-  
+  const CadastroClienteScreen({Key? key});
+
   @override
   CadastroClienteScreenState createState() => CadastroClienteScreenState();
 }
@@ -18,7 +17,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   TextEditingController cepClienteController = TextEditingController();
   TextEditingController ruaClienteController = TextEditingController();
   TextEditingController numeroClienteController = TextEditingController();
-  TextEditingController cidadeClienteController = TextEditingController(); 
+  TextEditingController cidadeClienteController = TextEditingController();
 
   Future<void> adicionarCliente() async {
     try {
@@ -27,15 +26,32 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
         password: senhaClienteController.text,
       );
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ),
-      );
+      // Adiciona uma transição personalizada
+      Navigator.of(context).pushReplacement(_createRoute(LoginScreen()));
     } on FirebaseAuthException catch (e) {
       print('Erro ao cadastrar cliente: $e');
     }
+  }
+
+  // Função para criar uma rota personalizada
+  Route _createRoute(Widget destination) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => destination,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -99,7 +115,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
                 const SizedBox(height: 16.0),
                 Center(
                   child: ElevatedButton(
-                    onPressed: adicionarCliente, 
+                    onPressed: adicionarCliente,
                     child: const Text('Cadastrar'),
                   ),
                 )
