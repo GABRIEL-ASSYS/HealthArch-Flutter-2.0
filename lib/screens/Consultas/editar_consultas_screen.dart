@@ -166,6 +166,11 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
                 Center(
                   child: ElevatedButton(
                     onPressed: editarConsultaExistente,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlue, 
+                      onPrimary: Colors.white, 
+                      textStyle: const TextStyle(fontSize: 20), 
+                    ),
                     child: const Text('Salvar Edições'),
                   ),
                 ),
