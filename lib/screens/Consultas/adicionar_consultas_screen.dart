@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'consultas_screen.dart'; // Importe a tela de consultas aqui
 
 class AdicionarConsultaScreen extends StatefulWidget {
   const AdicionarConsultaScreen({Key? key}) : super(key: key);
@@ -62,6 +63,14 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
       });
 
       print('Consulta adicionada com sucesso!');
+
+      // Redirecione para a tela de consultas
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConsultasScreen(),
+        ),
+      );
     } catch (error) {
       print('Erro ao adicionar consulta: $error');
     }
