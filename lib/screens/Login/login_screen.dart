@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../Consultas/consultas_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   LoginScreenState createState() => LoginScreenState();
@@ -14,8 +14,7 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
 
-  Future<void> fazerLogin() async { // Armazena o contexto localmente
-
+  Future<void> fazerLogin() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
@@ -24,8 +23,21 @@ class LoginScreenState extends State<LoginScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => ConsultasScreen(),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const ConsultasScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = 0.0;
+            const end = 1.0;
+            const curve = Curves.easeInOut;
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var opacityAnimation = animation.drive(tween);
+
+            return FadeTransition(
+              opacity: opacityAnimation,
+              child: child,
+            );
+          },
         ),
       );
     } on FirebaseAuthException catch (e) {
@@ -98,4 +110,3 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
