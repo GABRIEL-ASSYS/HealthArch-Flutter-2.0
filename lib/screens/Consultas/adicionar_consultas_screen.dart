@@ -80,7 +80,7 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
     return Scaffold(
       appBar: AppBar(
          title: const Text(
-          'HealthArch',
+          'Adicionar Consulta',
           style: TextStyle(color: Colors.white),
         ),
       ),
