@@ -21,13 +21,11 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
 
   Future<void> adicionarCliente() async {
     try {
-      // Crie um novo usuário no Firebase Authentication
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailClienteController.text,
         password: senhaClienteController.text,
       );
 
-      // Após o cadastro bem-sucedido, redirecione para a tela de login
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -36,7 +34,6 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
       );
     } on FirebaseAuthException catch (e) {
       print('Erro ao cadastrar cliente: $e');
-      // Adicione aqui a lógica para lidar com erros de cadastro (por exemplo, exibir uma mensagem de erro).
     }
   }
 
