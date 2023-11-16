@@ -83,7 +83,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
     return Scaffold(
       appBar: AppBar(
          title: const Text(
-          'HealthArch',
+          'Consultas',
           style: TextStyle(color: Colors.white),
         ),
       ),
