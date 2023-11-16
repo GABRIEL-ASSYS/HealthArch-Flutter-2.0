@@ -44,7 +44,10 @@ class CadastroProfissionalScreenState extends State<CadastroProfissionalScreen> 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Profissional'),
+        title: const Text(
+          'Cadastro Profissional',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
