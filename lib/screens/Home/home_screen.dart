@@ -14,7 +14,10 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HealthArch'),
+        title: const Text(
+          'HealthArch',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Center(
         child: Column(
