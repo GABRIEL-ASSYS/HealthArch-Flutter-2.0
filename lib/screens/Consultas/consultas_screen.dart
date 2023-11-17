@@ -29,14 +29,13 @@ class ConsultasScreenState extends State<ConsultasScreen> {
         return data;
       }).toList();
 
-      // Ordenar consultas por data e hora (assumindo que 'horaData' é uma String formatada)
       consultas.sort((a, b) => a['horaData'].compareTo(b['horaData']));
 
       return consultas;
     } catch (error) {
       // ignore: avoid_print
       print('Erro ao carregar consultas: $error');
-      throw error; // Propagar o erro para o FutureBuilder
+      rethrow;
     }
   }
 
@@ -46,8 +45,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
           .collection('consultas')
           .doc(consultaId)
           .delete();
-
-      // Não recarregue consultas automaticamente, deixe o FutureBuilder lidar com isso
+          
     } catch (error) {
       // ignore: avoid_print
       print('Erro ao excluir consulta: $error');
@@ -81,7 +79,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
         future: consultasFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Erro: ${snapshot.error}'));
           } else {
