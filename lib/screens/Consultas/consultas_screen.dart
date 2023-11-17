@@ -43,7 +43,9 @@ class ConsultasScreenState extends State<ConsultasScreen> {
           .doc(consultaId)
           .delete();
 
-      await loadConsultas();
+      setState(() {
+        consultas.removeWhere((consulta) => consulta['id'] == consultaId);
+      });
     } catch (error) {
       // ignore: avoid_print
       print('Erro ao excluir consulta: $error');

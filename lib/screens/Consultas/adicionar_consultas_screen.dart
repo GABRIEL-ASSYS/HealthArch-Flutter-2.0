@@ -55,13 +55,17 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
       DateTime dataHora = DateTime.parse(horaDataController.text);
       Timestamp timestamp = Timestamp.fromDate(dataHora);
 
-      await FirebaseFirestore.instance.collection('consultas').add({
+      DocumentReference consultaRef = await FirebaseFirestore.instance.collection('consultas').add({
         'titulo': tituloController.text,
         'descricao': descricaoController.text,
         'horaData': timestamp,
         'nomeCliente': nomeClienteController.text,
         'nomeProfissional': nomeProfissionalController.text,
       });
+
+      String consultaId = consultaRef.id;
+
+      await consultaRef.update({'id': consultaId});
 
       Navigator.pushReplacement(
         context,
