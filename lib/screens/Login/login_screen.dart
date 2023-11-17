@@ -68,7 +68,7 @@ class LoginScreenState extends State<LoginScreen> {
                   const Text(
                     'Login',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -76,7 +76,7 @@ class LoginScreenState extends State<LoginScreen> {
                   const Text(
                     'Email:',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -90,7 +90,7 @@ class LoginScreenState extends State<LoginScreen> {
                   const Text(
                     'Senha',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -107,7 +107,7 @@ class LoginScreenState extends State<LoginScreen> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.lightBlue, 
                       onPrimary: Colors.white, 
-                      textStyle: const TextStyle(fontSize: 20), 
+                      textStyle: const TextStyle(fontSize: 25), 
                     ),
                     child: const Text('Entrar'),
                   ),

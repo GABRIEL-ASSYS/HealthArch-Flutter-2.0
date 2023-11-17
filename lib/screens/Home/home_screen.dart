@@ -30,7 +30,7 @@ class HomeScreenState extends State<HomeScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue, 
                 onPrimary: Colors.white,
-                textStyle: const TextStyle(fontSize: 20),
+                textStyle: const TextStyle(fontSize: 25),
               ),
               child: const Text('Login'),
             ),
@@ -42,7 +42,7 @@ class HomeScreenState extends State<HomeScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue, 
                 onPrimary: Colors.white, 
-                textStyle: const TextStyle(fontSize: 20), 
+                textStyle: const TextStyle(fontSize: 25), 
               ),
               child: const Text('Cadastro'),
             ),

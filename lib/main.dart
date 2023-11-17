@@ -21,6 +21,12 @@ void main() async {
     theme: ThemeData(
       primarySwatch: Colors.lightBlue,
       scaffoldBackgroundColor: Colors.white,
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+      ),
     ),
   ));
 }

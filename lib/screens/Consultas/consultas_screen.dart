@@ -96,7 +96,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
               const Text(
                 'Consultas',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -111,16 +111,36 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                     elevation: 3.0,
                     margin: const EdgeInsets.symmetric(vertical: 8.0),
                     child: ListTile(
-                      title: Text('ID: ${consulta['id']}'),
+                      title: Text(
+                        'ID: ${consulta['id']}',
+                        style: const TextStyle(
+                          fontSize: 25, 
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Título: ${consulta['titulo']}'),
-                          Text('Descrição: ${consulta['descricao']}'),
-                          Text('Data e Hora: ${consulta['horaData']}'),
-                          Text('Nome do Cliente: ${consulta['nomeCliente']}'),
                           Text(
-                              'Nome do Profissional: ${consulta['nomeProfissional']}'),
+                            'Título: ${consulta['titulo']}',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'Descrição: ${consulta['descricao']}',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'Data e Hora: ${consulta['horaData']}',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'Nome do Cliente: ${consulta['nomeCliente']}',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            'Nome do Profissional: ${consulta['nomeProfissional']}',
+                            style: const TextStyle(fontSize: 20),
+                          ),
                         ],
                       ),
                       trailing: Row(
@@ -133,7 +153,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.lightBlue, 
                               onPrimary: Colors.white, 
-                              textStyle: const TextStyle(fontSize: 20), 
+                              textStyle: const TextStyle(fontSize: 25), 
                             ),
                             child: const Text('Excluir'),
                           ),
@@ -145,7 +165,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.lightBlue, 
                               onPrimary: Colors.white, 
-                              textStyle: const TextStyle(fontSize: 20), 
+                              textStyle: const TextStyle(fontSize: 25), 
                             ),
                             child: const Text('Editar'),
                           ),

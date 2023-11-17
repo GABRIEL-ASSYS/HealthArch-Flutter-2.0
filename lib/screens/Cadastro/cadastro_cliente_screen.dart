@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -23,12 +24,28 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
     final navigator = Navigator.of(context);
 
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailClienteController.text,
         password: senhaClienteController.text,
       );
 
-      navigator.pushReplacement(_createRoute(const LoginScreen()));
+      User? user = userCredential.user;
+      if (user != null) {
+        String userID = user.uid;
+
+        await FirebaseFirestore.instance.collection('usuarioCliente').doc(userID).set({
+          'nome': nomeClienteController.text,
+          'email': emailClienteController.text,
+          'cep': cepClienteController.text,
+          'rua': ruaClienteController.text,
+          'numero': numeroClienteController.text,
+          'cidade': cidadeClienteController.text,
+          'senha': senhaClienteController.text,
+        });
+
+        navigator.pushReplacement(_createRoute(const LoginScreen()));
+      }
     } on FirebaseAuthException catch (e) {
       // ignore: avoid_print
       print('Erro ao cadastrar cliente: $e');
@@ -43,7 +60,8 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
         const end = Offset.zero;
         const curve = Curves.easeInOut;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         var offsetAnimation = animation.drive(tween);
 
@@ -59,7 +77,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: const Text(
+        title: const Text(
           'Cadastro Cliente',
           style: TextStyle(color: Colors.white),
         ),
@@ -76,7 +94,7 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
                   child: Text(
                     'Cadastro',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -88,30 +106,38 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
                       TextFormField(
                         controller: nomeClienteController,
                         decoration: const InputDecoration(labelText: 'Nome:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: emailClienteController,
                         decoration: const InputDecoration(labelText: 'Email:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: senhaClienteController,
+                        obscureText: true,
                         decoration: const InputDecoration(labelText: 'Senha:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: cepClienteController,
                         decoration: const InputDecoration(labelText: 'CEP:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: ruaClienteController,
                         decoration: const InputDecoration(labelText: 'Rua'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: numeroClienteController,
                         decoration: const InputDecoration(labelText: 'Número:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: cidadeClienteController,
                         decoration: const InputDecoration(labelText: 'Cidade:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ],
                   ),
@@ -121,9 +147,9 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
                   child: ElevatedButton(
                     onPressed: adicionarCliente,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue, 
-                      onPrimary: Colors.white, 
-                      textStyle: const TextStyle(fontSize: 20), 
+                      primary: Colors.lightBlue,
+                      onPrimary: Colors.white,
+                      textStyle: const TextStyle(fontSize: 25),
                     ),
                     child: const Text('Cadastrar'),
                   ),

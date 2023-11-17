@@ -30,6 +30,11 @@ class CadastroScreenState extends State<CadastroScreen> {
                   MaterialPageRoute(builder: (context) => const CadastroClienteScreen()),
                 );
               }, 
+              style: ElevatedButton.styleFrom(
+                primary: Colors.lightBlue, 
+                onPrimary: Colors.white, 
+                textStyle: const TextStyle(fontSize: 25), 
+              ),
               child: const Text('Cadastro Cliente'),
             ),
             const SizedBox(height: 16.0),
@@ -43,7 +48,7 @@ class CadastroScreenState extends State<CadastroScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.lightBlue, 
                 onPrimary: Colors.white, 
-                textStyle: const TextStyle(fontSize: 20), 
+                textStyle: const TextStyle(fontSize: 25), 
               ),
               child: const Text('Cadastro Profissional'),
             ),

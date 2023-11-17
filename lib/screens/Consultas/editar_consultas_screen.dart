@@ -129,7 +129,7 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
                   child: Text(
                     'Editar Consulta:',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -141,23 +141,28 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
                       TextFormField(
                         controller: tituloController,
                         decoration: const InputDecoration(labelText: 'Título:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: descricaoController,
                         decoration: const InputDecoration(labelText: 'Descrição:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: horaDataController,
                         decoration: const InputDecoration(labelText: 'Data e Hora:'),
+                        style: const TextStyle(fontSize: 20),
                         onTap: adicionarConsulta,
                       ),
                       TextFormField(
                         controller: nomeClienteController,
                         decoration: const InputDecoration(labelText: 'Nome do Cliente:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: nomeProfissionalController,
                         decoration: const InputDecoration(labelText: 'Nome do Profissional:'),
+                        style: const TextStyle(fontSize: 20),
                       ),
                     ],
                   ),
@@ -169,7 +174,7 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.lightBlue, 
                       onPrimary: Colors.white, 
-                      textStyle: const TextStyle(fontSize: 20), 
+                      textStyle: const TextStyle(fontSize: 25), 
                     ),
                     child: const Text('Salvar Edições'),
                   ),
