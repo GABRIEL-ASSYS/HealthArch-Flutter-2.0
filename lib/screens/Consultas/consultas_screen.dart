@@ -11,28 +11,32 @@ class ConsultasScreen extends StatefulWidget {
 }
 
 class ConsultasScreenState extends State<ConsultasScreen> {
-  late List<Map<String, dynamic>> consultas;
+  late Future<List<Map<String, dynamic>>> consultasFuture;
 
   @override
   void initState() {
     super.initState();
-    loadConsultas();
+    consultasFuture = loadConsultas();
   }
 
-  Future<void> loadConsultas() async {
+  Future<List<Map<String, dynamic>>> loadConsultas() async {
     try {
       QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection('consultas').get();
 
-      consultas = querySnapshot.docs.map((DocumentSnapshot doc) {
+      List<Map<String, dynamic>> consultas = querySnapshot.docs.map((DocumentSnapshot doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return data;
       }).toList();
 
-      setState(() {});
+      // Ordenar consultas por data e hora (assumindo que 'horaData' é uma String formatada)
+      consultas.sort((a, b) => a['horaData'].compareTo(b['horaData']));
+
+      return consultas;
     } catch (error) {
       // ignore: avoid_print
       print('Erro ao carregar consultas: $error');
+      throw error; // Propagar o erro para o FutureBuilder
     }
   }
 
@@ -43,9 +47,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
           .doc(consultaId)
           .delete();
 
-      setState(() {
-        consultas.removeWhere((consulta) => consulta['id'] == consultaId);
-      });
+      // Não recarregue consultas automaticamente, deixe o FutureBuilder lidar com isso
     } catch (error) {
       // ignore: avoid_print
       print('Erro ao excluir consulta: $error');
@@ -56,22 +58,8 @@ class ConsultasScreenState extends State<ConsultasScreen> {
     try {
       Navigator.push(
         context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              EditarConsultaScreen(consultaId: consultaId),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = 0.0;
-            const end = 1.0;
-            const curve = Curves.easeInOut;
-
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var opacityAnimation = animation.drive(tween);
-
-            return FadeTransition(
-              opacity: opacityAnimation,
-              child: child,
-            );
-          },
+        MaterialPageRoute(
+          builder: (context) => EditarConsultaScreen(consultaId: consultaId),
         ),
       );
     } catch (error) {
@@ -84,128 +72,138 @@ class ConsultasScreenState extends State<ConsultasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: const Text(
+        title: const Text(
           'Consultas',
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Consultas',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: consultas.length,
-                itemBuilder: (context, index) {
-                  final consulta = consultas[index];
-                  return Card(
-                    elevation: 3.0,
-                    margin: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: ListTile(
-                      title: Text(
-                        'ID: ${consulta['id']}',
-                        style: const TextStyle(
-                          fontSize: 25, 
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Título: ${consulta['titulo']}',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'Descrição: ${consulta['descricao']}',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'Data e Hora: ${consulta['horaData']}',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'Nome do Cliente: ${consulta['nomeCliente']}',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'Nome do Profissional: ${consulta['nomeProfissional']}',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              excluirConsulta(consulta['id']);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.lightBlue, 
-                              onPrimary: Colors.white, 
-                              textStyle: const TextStyle(fontSize: 25), 
-                            ),
-                            child: const Text('Excluir'),
-                          ),
-                          const SizedBox(width: 8.0),
-                          ElevatedButton(
-                            onPressed: () {
-                              editarConsulta(consulta['id']);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.lightBlue, 
-                              onPrimary: Colors.white, 
-                              textStyle: const TextStyle(fontSize: 25), 
-                            ),
-                            child: const Text('Editar'),
-                          ),
-                        ],
+      body: FutureBuilder(
+        future: consultasFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Erro: ${snapshot.error}'));
+          } else {
+            List<Map<String, dynamic>> consultas = snapshot.data as List<Map<String, dynamic>>;
+
+            return SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      'Consultas',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  );
-                },
-              ),
-              const SizedBox(height: 16.0),
-              FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          const AdicionarConsultaScreen(),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        const begin = 0.0;
-                        const end = 1.0;
-                        const curve = Curves.easeInOut;
-
-                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                        var opacityAnimation = animation.drive(tween);
-
-                        return FadeTransition(
-                          opacity: opacityAnimation,
-                          child: child,
+                    const SizedBox(height: 16.0),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: consultas.length,
+                      itemBuilder: (context, index) {
+                        final consulta = consultas[index];
+                        return Card(
+                          elevation: 3.0,
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListTile(
+                            title: Text(
+                              'ID: ${consulta['id']}',
+                              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Título: ${consulta['titulo']}',
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  'Descrição: ${consulta['descricao']}',
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  'Data e Hora: ${consulta['horaData']}',
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  'Nome do Cliente: ${consulta['nomeCliente']}',
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  'Nome do Profissional: ${consulta['nomeProfissional']}',
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    excluirConsulta(consulta['id']);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.lightBlue,
+                                    onPrimary: Colors.white,
+                                    textStyle: const TextStyle(fontSize: 25),
+                                  ),
+                                  child: const Text('Excluir'),
+                                ),
+                                const SizedBox(width: 8.0),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    editarConsulta(consulta['id']);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.lightBlue,
+                                    onPrimary: Colors.white,
+                                    textStyle: const TextStyle(fontSize: 25),
+                                  ),
+                                  child: const Text('Editar'),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
                     ),
-                  );
-                },
-                child: const Icon(Icons.add),
+                    const SizedBox(height: 16.0),
+                    FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) =>
+                                const AdicionarConsultaScreen(),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              const begin = 0.0;
+                              const end = 1.0;
+                              const curve = Curves.easeInOut;
+
+                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                              var opacityAnimation = animation.drive(tween);
+
+                              return FadeTransition(
+                                opacity: opacityAnimation,
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: const Icon(Icons.add),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            );
+          }
+        },
       ),
     );
   }
