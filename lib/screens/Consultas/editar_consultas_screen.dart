@@ -53,7 +53,7 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
       Timestamp timestamp = Timestamp.fromDate(dataHora);
 
       await FirebaseFirestore.instance
-          .collection('consulta')
+          .collection('consultas')
           .doc(widget.consultaId)
           .update({
         'titulo': tituloController.text,

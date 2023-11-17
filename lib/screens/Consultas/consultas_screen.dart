@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:health_arch/screens/Consultas/adicionar_consultas_screen.dart';
 import 'package:health_arch/screens/Consultas/editar_consultas_screen.dart';
+import 'package:intl/intl.dart';
 
 class ConsultasScreen extends StatefulWidget {
   const ConsultasScreen({Key? key}) : super(key: key);
@@ -66,6 +67,12 @@ class ConsultasScreenState extends State<ConsultasScreen> {
     }
   }
 
+  Future<void> refreshConsultas() async {
+    setState(() {
+      consultasFuture = loadConsultas();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +81,14 @@ class ConsultasScreenState extends State<ConsultasScreen> {
           'Consultas',
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              refreshConsultas();
+            }, 
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: consultasFuture,
@@ -125,7 +140,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                                   style: const TextStyle(fontSize: 20),
                                 ),
                                 Text(
-                                  'Data e Hora: ${consulta['horaData']}',
+                                  'Data e Hora: ${DateFormat('dd/MM/yyyy HH:mm').format(consulta['horaData'].toDate())}',
                                   style: const TextStyle(fontSize: 20),
                                 ),
                                 Text(
@@ -194,7 +209,7 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                           ),
                         );
                       },
-                      child: const Icon(Icons.add),
+                      child: const Icon(Icons.add, color: Colors.white,),
                     ),
                   ],
                 ),
