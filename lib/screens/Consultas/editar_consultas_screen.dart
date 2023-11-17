@@ -6,7 +6,8 @@ import 'consultas_screen.dart';
 class EditarConsultaScreen extends StatefulWidget {
   final String consultaId;
 
-  const EditarConsultaScreen({Key? key, required this.consultaId}) : super(key: key);
+  const EditarConsultaScreen({Key? key, required this.consultaId})
+      : super(key: key);
 
   @override
   EditarConsultaScreenState createState() => EditarConsultaScreenState();
@@ -32,7 +33,8 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
           .doc(widget.consultaId)
           .get();
 
-      Map<String, dynamic> consultaData = consultaSnapshot.data() as Map<String, dynamic>;
+      Map<String, dynamic> consultaData =
+          consultaSnapshot.data() as Map<String, dynamic>;
 
       tituloController.text = consultaData['titulo'];
       descricaoController.text = consultaData['descricao'];
@@ -99,7 +101,8 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
             horaSelecionada.minute,
           );
 
-          horaDataController.text = DateFormat('yyyy-MM-dd HH:mm').format(dataHoraSelecionada);
+          horaDataController.text =
+              DateFormat('yyyy-MM-dd HH:mm').format(dataHoraSelecionada);
         }
       }
     } catch (error) {
@@ -112,9 +115,15 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Editar Consulta',
-          style: TextStyle(color: Colors.white),
+        title: const Row(
+          children: [
+            Text(
+              'Editar Consulta',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(width: 8.0,),
+            Icon(Icons.calendar_month),
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -145,23 +154,27 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
                       ),
                       TextFormField(
                         controller: descricaoController,
-                        decoration: const InputDecoration(labelText: 'Descrição:'),
+                        decoration:
+                            const InputDecoration(labelText: 'Descrição:'),
                         style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: horaDataController,
-                        decoration: const InputDecoration(labelText: 'Data e Hora:'),
+                        decoration:
+                            const InputDecoration(labelText: 'Data e Hora:'),
                         style: const TextStyle(fontSize: 20),
                         onTap: adicionarConsulta,
                       ),
                       TextFormField(
                         controller: nomeClienteController,
-                        decoration: const InputDecoration(labelText: 'Nome do Cliente:'),
+                        decoration: const InputDecoration(
+                            labelText: 'Nome do Cliente:'),
                         style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: nomeProfissionalController,
-                        decoration: const InputDecoration(labelText: 'Nome do Profissional:'),
+                        decoration: const InputDecoration(
+                            labelText: 'Nome do Profissional:'),
                         style: const TextStyle(fontSize: 20),
                       ),
                     ],
@@ -172,9 +185,9 @@ class EditarConsultaScreenState extends State<EditarConsultaScreen> {
                   child: ElevatedButton(
                     onPressed: editarConsultaExistente,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue, 
-                      onPrimary: Colors.white, 
-                      textStyle: const TextStyle(fontSize: 25), 
+                      primary: Colors.lightBlue,
+                      onPrimary: Colors.white,
+                      textStyle: const TextStyle(fontSize: 25),
                     ),
                     child: const Text('Salvar Edições'),
                   ),

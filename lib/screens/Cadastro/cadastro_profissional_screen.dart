@@ -66,9 +66,15 @@ class CadastroProfissionalScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Cadastro Profissional',
-          style: TextStyle(color: Colors.white),
+        title: const Row(
+          children: [
+            Text(
+              'Cadastro Profissional',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(width: 8.0,),
+            Icon(Icons.account_box),
+          ],
         ),
       ),
       body: SingleChildScrollView(

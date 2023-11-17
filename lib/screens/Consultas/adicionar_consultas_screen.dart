@@ -7,7 +7,8 @@ class AdicionarConsultaScreen extends StatefulWidget {
   const AdicionarConsultaScreen({Key? key}) : super(key: key);
 
   @override
-  AdicionarConsultasScreenState createState() => AdicionarConsultasScreenState();
+  AdicionarConsultasScreenState createState() =>
+      AdicionarConsultasScreenState();
 }
 
 class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
@@ -41,7 +42,8 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
             horaSelecionada.minute,
           );
 
-          horaDataController.text = DateFormat('yyyy-MM-dd HH:mm').format(dataHoraSelecionada);
+          horaDataController.text =
+              DateFormat('yyyy-MM-dd HH:mm').format(dataHoraSelecionada);
         }
       }
     } catch (error) {
@@ -55,7 +57,8 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
       DateTime dataHora = DateTime.parse(horaDataController.text);
       Timestamp timestamp = Timestamp.fromDate(dataHora);
 
-      DocumentReference consultaRef = await FirebaseFirestore.instance.collection('consultas').add({
+      DocumentReference consultaRef =
+          await FirebaseFirestore.instance.collection('consultas').add({
         'titulo': tituloController.text,
         'descricao': descricaoController.text,
         'horaData': timestamp,
@@ -83,9 +86,15 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         title: const Text(
-          'Adicionar Consulta',
-          style: TextStyle(color: Colors.white),
+        title: const Row(
+          children: [
+            Text(
+              'Adicionar Consulta',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(width: 8.0,),
+            Icon(Icons.calendar_month),
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -116,23 +125,27 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                       ),
                       TextFormField(
                         controller: descricaoController,
-                        decoration: const InputDecoration(labelText: 'Descrição:'),
+                        decoration:
+                            const InputDecoration(labelText: 'Descrição:'),
                         style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: horaDataController,
-                        decoration: const InputDecoration(labelText: 'Data e Hora:'),
+                        decoration:
+                            const InputDecoration(labelText: 'Data e Hora:'),
                         style: const TextStyle(fontSize: 20),
                         onTap: adicionarConsulta,
                       ),
                       TextFormField(
                         controller: nomeClienteController,
-                        decoration: const InputDecoration(labelText: 'Nome do Cliente:'),
+                        decoration: const InputDecoration(
+                            labelText: 'Nome do Cliente:'),
                         style: const TextStyle(fontSize: 20),
                       ),
                       TextFormField(
                         controller: nomeProfissionalController,
-                        decoration: const InputDecoration(labelText: 'Nome do Profissional:'),
+                        decoration: const InputDecoration(
+                            labelText: 'Nome do Profissional:'),
                         style: const TextStyle(fontSize: 20),
                       ),
                     ],
@@ -143,9 +156,9 @@ class AdicionarConsultasScreenState extends State<AdicionarConsultaScreen> {
                   child: ElevatedButton(
                     onPressed: enviarConsulta,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue, 
-                      onPrimary: Colors.white, 
-                      textStyle: const TextStyle(fontSize: 25), 
+                      primary: Colors.lightBlue,
+                      onPrimary: Colors.white,
+                      textStyle: const TextStyle(fontSize: 25),
                     ),
                     child: const Text('Cadastrar'),
                   ),

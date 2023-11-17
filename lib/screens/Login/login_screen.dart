@@ -15,7 +15,6 @@ class LoginScreenState extends State<LoginScreen> {
   final TextEditingController senhaController = TextEditingController();
 
   Future<void> fazerLogin() async {
-    
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
@@ -25,13 +24,15 @@ class LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const ConsultasScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const ConsultasScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = 0.0;
             const end = 1.0;
             const curve = Curves.easeInOut;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
             var opacityAnimation = animation.drive(tween);
 
             return FadeTransition(
@@ -51,9 +52,15 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Login',
-          style: TextStyle(color: Colors.white),
+        title: const Row(
+          children: [
+            Text(
+              'Login',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(width: 8.0,),
+            Icon(Icons.account_box),
+          ],
         ),
       ),
       body: Center(
@@ -105,9 +112,9 @@ class LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     onPressed: fazerLogin,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue, 
-                      onPrimary: Colors.white, 
-                      textStyle: const TextStyle(fontSize: 25), 
+                      primary: Colors.lightBlue,
+                      onPrimary: Colors.white,
+                      textStyle: const TextStyle(fontSize: 25),
                     ),
                     child: const Text('Entrar'),
                   ),

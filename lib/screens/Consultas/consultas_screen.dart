@@ -25,7 +25,8 @@ class ConsultasScreenState extends State<ConsultasScreen> {
       QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection('consultas').get();
 
-      List<Map<String, dynamic>> consultas = querySnapshot.docs.map((DocumentSnapshot doc) {
+      List<Map<String, dynamic>> consultas =
+          querySnapshot.docs.map((DocumentSnapshot doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return data;
       }).toList();
@@ -46,7 +47,6 @@ class ConsultasScreenState extends State<ConsultasScreen> {
           .collection('consultas')
           .doc(consultaId)
           .delete();
-          
     } catch (error) {
       // ignore: avoid_print
       print('Erro ao excluir consulta: $error');
@@ -77,15 +77,21 @@ class ConsultasScreenState extends State<ConsultasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Consultas',
-          style: TextStyle(color: Colors.white),
+        title: const Row(
+          children: [
+            Text(
+              'Consultas',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(width: 8.0,),
+            Icon(Icons.calendar_month),
+          ],
         ),
         actions: [
           IconButton(
             onPressed: () {
               refreshConsultas();
-            }, 
+            },
             icon: const Icon(Icons.refresh),
           ),
         ],
@@ -98,7 +104,8 @@ class ConsultasScreenState extends State<ConsultasScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Erro: ${snapshot.error}'));
           } else {
-            List<Map<String, dynamic>> consultas = snapshot.data as List<Map<String, dynamic>>;
+            List<Map<String, dynamic>> consultas =
+                snapshot.data as List<Map<String, dynamic>>;
 
             return SingleChildScrollView(
               child: Container(
@@ -126,7 +133,8 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                           child: ListTile(
                             title: Text(
                               'ID: ${consulta['id']}',
-                              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
                             ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,14 +199,17 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                         Navigator.push(
                           context,
                           PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) =>
-                                const AdicionarConsultaScreen(),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const AdicionarConsultaScreen(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
                               const begin = 0.0;
                               const end = 1.0;
                               const curve = Curves.easeInOut;
 
-                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
                               var opacityAnimation = animation.drive(tween);
 
                               return FadeTransition(
@@ -209,7 +220,10 @@ class ConsultasScreenState extends State<ConsultasScreen> {
                           ),
                         );
                       },
-                      child: const Icon(Icons.add, color: Colors.white,),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),

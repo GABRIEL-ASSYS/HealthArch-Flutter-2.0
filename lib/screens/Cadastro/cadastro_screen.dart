@@ -14,9 +14,15 @@ class CadastroScreenState extends State<CadastroScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Cadastro',
-          style: TextStyle(color: Colors.white),
+        title: const Row(
+          children: [
+            Text(
+              'Cadastro',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(width: 8.0,),
+            Icon(Icons.account_box),
+          ],
         ),
       ),
       body: Center(
@@ -27,13 +33,14 @@ class CadastroScreenState extends State<CadastroScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CadastroClienteScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const CadastroClienteScreen()),
                 );
-              }, 
+              },
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightBlue, 
-                onPrimary: Colors.white, 
-                textStyle: const TextStyle(fontSize: 25), 
+                primary: Colors.lightBlue,
+                onPrimary: Colors.white,
+                textStyle: const TextStyle(fontSize: 25),
               ),
               child: const Text('Cadastro Cliente'),
             ),
@@ -42,13 +49,14 @@ class CadastroScreenState extends State<CadastroScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CadastroProfissionalScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const CadastroProfissionalScreen()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightBlue, 
-                onPrimary: Colors.white, 
-                textStyle: const TextStyle(fontSize: 25), 
+                primary: Colors.lightBlue,
+                onPrimary: Colors.white,
+                textStyle: const TextStyle(fontSize: 25),
               ),
               child: const Text('Cadastro Profissional'),
             ),

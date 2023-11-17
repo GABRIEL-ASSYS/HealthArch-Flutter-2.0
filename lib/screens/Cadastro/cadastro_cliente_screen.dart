@@ -34,7 +34,10 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
       if (user != null) {
         String userID = user.uid;
 
-        await FirebaseFirestore.instance.collection('usuarioCliente').doc(userID).set({
+        await FirebaseFirestore.instance
+            .collection('usuarioCliente')
+            .doc(userID)
+            .set({
           'nome': nomeClienteController.text,
           'email': emailClienteController.text,
           'cep': cepClienteController.text,
@@ -77,9 +80,15 @@ class CadastroClienteScreenState extends State<CadastroClienteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Cadastro Cliente',
-          style: TextStyle(color: Colors.white),
+        title: const Row(
+          children: [
+            Text(
+              'Cadastro Cliente',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(width: 8.0,),
+            Icon(Icons.account_box),
+          ],
         ),
       ),
       body: SingleChildScrollView(
