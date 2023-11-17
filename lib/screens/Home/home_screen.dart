@@ -23,6 +23,11 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              'assets/images/Logo.png',
+              height: 300,
+              width: 300,
+            ),
             ElevatedButton(
               onPressed: () {
                 _navigateToLoginScreen(context);
